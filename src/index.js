@@ -79,7 +79,8 @@ export default class SDK {
     getCategory: (req = {}) => {
       const { categoryId, query, headers } = req;
 
-      if (!categoryId) throw new Error("categoryId is required for getCategory");
+      if (!categoryId)
+        throw new Error("categoryId is required for getCategory");
 
       return fetch(`${this.base}/categories/${categoryId}`, {
         method: "get",
@@ -96,7 +97,8 @@ export default class SDK {
     updateCategory: (req = {}) => {
       const { categoryId, headers, body } = req;
 
-      if (!categoryId) throw new Error("categoryId is required for updateCategory");
+      if (!categoryId)
+        throw new Error("categoryId is required for updateCategory");
       if (!body) throw new Error("requetBody is required for updateCategory");
 
       return fetch(`${this.base}/categories/${categoryId}`, {
@@ -114,7 +116,8 @@ export default class SDK {
     deleteCategory: (req = {}) => {
       const { categoryId, headers } = req;
 
-      if (!categoryId) throw new Error("categoryId is required for deleteCategory");
+      if (!categoryId)
+        throw new Error("categoryId is required for deleteCategory");
 
       return fetch(`${this.base}/categories/${categoryId}`, {
         method: "delete",
@@ -274,7 +277,8 @@ export default class SDK {
     updateComment: (req = {}) => {
       const { commentId, headers, body } = req;
 
-      if (!commentId) throw new Error("commentId is required for updateComment");
+      if (!commentId)
+        throw new Error("commentId is required for updateComment");
       if (!body) throw new Error("requetBody is required for updateComment");
 
       return fetch(`${this.base}/comments/${commentId}`, {
@@ -292,7 +296,8 @@ export default class SDK {
     deleteComment: (req = {}) => {
       const { commentId, headers } = req;
 
-      if (!commentId) throw new Error("commentId is required for deleteComment");
+      if (!commentId)
+        throw new Error("commentId is required for deleteComment");
 
       return fetch(`${this.base}/comments/${commentId}`, {
         method: "delete",
@@ -313,8 +318,10 @@ export default class SDK {
     updateCommentMeta: (req = {}) => {
       const { commentId, headers, body } = req;
 
-      if (!commentId) throw new Error("commentId is required for updateCommentMeta");
-      if (!body) throw new Error("requetBody is required for updateCommentMeta");
+      if (!commentId)
+        throw new Error("commentId is required for updateCommentMeta");
+      if (!body)
+        throw new Error("requetBody is required for updateCommentMeta");
 
       return fetch(`${this.base}/comments/${commentId}/meta`, {
         method: "put",
