@@ -1,30 +1,26 @@
-const faker = require("faker");
-const _ = require("lodash");
-
-const pets = count =>
-  _.range(count).map((val, index) => ({
-    id: faker.random.uuid(),
-    name: faker.name.lastName(),
-    tag: faker.random.arrayElement(["CAT", "DOG", "RABBIT"]),
-  }));
+const posts = require("./posts");
+const comments = require("./comments");
+const categories = require("./categories");
+const tags = require("./tags");
 
 module.exports = {
   /**
    * mock data
    */
   db: {
-    pets,
+    posts,
+    categories,
+    comments,
+    tags,
   },
 
   /**
-   * rewrite
+   * rewrites
    */
-  rewrite: {},
+  rewrites: {},
 
   /**
-   * Config mock server
+   * routers
    */
-  serverOpts: {
-    delay: 500,
-  },
+  routers: [],
 };
