@@ -124,6 +124,25 @@ export default class SDK {
         headers: { Authorization: this.auth, ...headers },
       });
     },
+    /**
+     * List all categories under one category
+     *
+     * @param {ListCategoriesByParentRequest} req listCategoriesByParent request
+     * @returns {Promise<ListCategoriesByParentResponse>} A paged array of categories
+     */
+    listCategoriesByParent: (req = {}) => {
+      const { categoryId, query, headers } = req;
+
+      if (!categoryId)
+        throw new Error("categoryId is required for listCategoriesByParent");
+      if (!query) throw new Error("query is required for category");
+
+      return fetch(`${this.base}/categories/${categoryId}/categories`, {
+        method: "get",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
   };
   /**
    * post's methods
@@ -313,7 +332,7 @@ export default class SDK {
      * Update meta to comment
      *
      * @param {UpdateCommentMetaRequest} req updateCommentMeta request
-     * @returns {Promise<UpdateCommentMetaResponse>} The post
+     * @returns {Promise<UpdateCommentMetaResponse>} The meta
      */
     updateCommentMeta: (req = {}) => {
       const { commentId, headers, body } = req;
@@ -333,7 +352,7 @@ export default class SDK {
      * Update meta to post
      *
      * @param {UpdatePostMetaRequest} req updatePostMeta request
-     * @returns {Promise<UpdatePostMetaResponse>} The post
+     * @returns {Promise<UpdatePostMetaResponse>} The meta
      */
     updatePostMeta: (req = {}) => {
       const { postId, headers, body } = req;
@@ -344,6 +363,23 @@ export default class SDK {
       return fetch(`${this.base}/posts/${postId}/meta`, {
         method: "put",
         body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Get favorites of a user
+     *
+     * @param {GetUserFavoritesRequest} req getUserFavorites request
+     * @returns {Promise<GetUserFavoritesResponse>} The posts
+     */
+    getUserFavorites: (req = {}) => {
+      const { userId, query, headers } = req;
+
+      if (!userId) throw new Error("userId is required for getUserFavorites");
+
+      return fetch(`${this.base}/users/${userId}/favorites`, {
+        method: "get",
+        query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
     },

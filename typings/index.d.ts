@@ -42,6 +42,12 @@ declare namespace SDK {
      *
      */
     deleteCategory(req: DeleteCategoryRequest): Promise<DeleteCategoryResponse>;
+    /**
+     * List all categories under one category
+     */
+    listCategoriesByParent(
+      req: ListCategoriesByParentRequest
+    ): Promise<ListCategoriesByParentResponse>;
   }
   export interface PostAPI {
     /**
@@ -96,6 +102,10 @@ declare namespace SDK {
      * Update meta to post
      */
     updatePostMeta(req: UpdatePostMetaRequest): Promise<UpdatePostMetaResponse>;
+    /**
+     * Get favorites of a user
+     */
+    getUserFavorites(req: GetUserFavoritesRequest): Promise<GetUserFavoritesResponse>;
   }
   export interface TopicAPI {
     /**
@@ -182,6 +192,32 @@ declare namespace SDK {
     categoryId: string;
   };
 
+  type ListCategoriesByParentRequest = {
+    categoryId: string;
+
+    query: {
+      limit?: number;
+      sort?: string;
+      populate?: string;
+      select?: number;
+      _page?: string;
+      _order?: string;
+      _embed?: string;
+
+      filter: {
+        title?: string;
+        ns: string;
+      };
+    };
+  };
+
+  type ListCategoriesByParentResponse = {
+    body: Array<Category>;
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
   type ListPostsRequest = {
     query: {
       limit?: number;
@@ -201,6 +237,9 @@ declare namespace SDK {
           $lt?: string;
           $gt?: string;
         };
+        lang?: string;
+        published?: boolean;
+        user?: string;
       };
     };
   };
@@ -226,6 +265,11 @@ declare namespace SDK {
     query: {
       populate?: string;
       _embed?: string;
+
+      filter: {
+        addView?: boolean;
+        user?: string;
+      };
     };
   };
 
@@ -262,6 +306,8 @@ declare namespace SDK {
           $gt?: string;
           $lt?: string;
         };
+        user?: string;
+        ns?: string;
       };
     };
   };
@@ -286,6 +332,10 @@ declare namespace SDK {
 
     query: {
       populate?: string;
+
+      filter: {
+        user?: string;
+      };
     };
   };
 
@@ -330,6 +380,29 @@ declare namespace SDK {
 
   type UpdatePostMetaResponse = {
     body: Meta;
+  };
+
+  type GetUserFavoritesRequest = {
+    userId: string;
+
+    query: {
+      limit?: number;
+      sort?: string;
+      select?: number;
+      _page?: string;
+      _order?: string;
+
+      filter: {
+        ns?: string;
+      };
+    };
+  };
+
+  type GetUserFavoritesResponse = {
+    body: Array<Post>;
+    headers: {
+      xTotalCount: string;
+    };
   };
 
   type ListTopicsRequest = {
@@ -455,6 +528,9 @@ declare namespace SDK {
     topics: Array<string>;
     weight: number;
     ns: string;
+    lang: string;
+    link: string;
+    date: string;
   };
 
   type PostCreateable = {
@@ -485,6 +561,9 @@ declare namespace SDK {
     topics: Array<string>;
     weight: number;
     ns: string;
+    lang: string;
+    link: string;
+    date: string;
   };
 
   type Post = {
@@ -530,6 +609,9 @@ declare namespace SDK {
     topics: Array<string>;
     weight: number;
     ns: string;
+    lang: string;
+    link: string;
+    date: string;
     createdAt: string;
     updatedAt: string;
     id: string;
@@ -605,6 +687,7 @@ declare namespace SDK {
     comment: string;
     like: boolean;
     favorite: boolean;
+    ns: string;
   };
 
   type TopicUpdateable = {
